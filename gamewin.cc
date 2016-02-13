@@ -765,6 +765,11 @@ long Game_window::check_time_stopped(
 void Game_window::toggle_combat(
 ) {
 	combat = !combat;
+	if (combat){
+		cout << "TBC: tbc.checkCombatStarted()" << endl;
+	} else {
+		cout << "TBC: tbc.onCombatEnds()" << endl;
+	}
 	// Change party member's schedules.
 	int newsched = combat ? Schedule::combat : Schedule::follow_avatar;
 	int cnt = party_man->get_count();
@@ -1776,6 +1781,7 @@ void Game_window::start_actor_alt(
 	tx = (tx + c_num_tiles) % c_num_tiles;
 	ty = (ty + c_num_tiles) % c_num_tiles;
 	main_actor->walk_to_tile(tx, ty, lift, speed, 0);
+	cout << "TBC: if (tbc.inBattle) tbc.increaseStepCount {Walking}" << endl;
 	if (walk_in_formation && main_actor->get_action())
 		//++++++In this case, may need to set schedules back to
 		// follow_avatar after, say, sitting.++++++++++
@@ -2366,6 +2372,7 @@ void Game_window::double_clicked(
 	// Animation in progress?
 	if (main_actor_dont_move())
 		return;
+	cout << "TBC: if (tbc.blocked) return {Double Click}" << endl;
 	// Nothing going on?
 	if (!Usecode_script::get_count())
 		removed->flush();   // Flush removed objects.
@@ -2405,6 +2412,7 @@ void Game_window::double_clicked(
 			// Want everyone to be in combat.
 			combat = 0;
 			main_actor->set_target(obj);
+			cout << "TBC: Attacking a monster" << endl;	
 			toggle_combat();
 			return;
 		}
