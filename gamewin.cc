@@ -1781,7 +1781,6 @@ void Game_window::start_actor_alt(
 	tx = (tx + c_num_tiles) % c_num_tiles;
 	ty = (ty + c_num_tiles) % c_num_tiles;
 	main_actor->walk_to_tile(tx, ty, lift, speed, 0);
-	cout << "TBC: if (tbc.inBattle) tbc.increaseStepCount {Walking}" << endl;
 	if (walk_in_formation && main_actor->get_action())
 		//++++++In this case, may need to set schedules back to
 		// follow_avatar after, say, sitting.++++++++++

@@ -860,7 +860,9 @@ bool Combat_schedule::attack_target(
 	Actor *att = attacker->as_actor();
 	if (att && att->is_dead())
 		return false;
-	cout << "TBC: tbc.turnEnd() {Attacking an enemy}" << endl;
+	if (attacker == gwin->get_main_actor()){
+		cout << "TBC: tbc.turnEnd() {Player attacking an enemy}" << endl;
+	}
 	bool flash_mouse = !combat && att && gwin->get_main_actor() == att
 	                   && att->get_attack_mode() != Actor::manual;
 

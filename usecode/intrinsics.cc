@@ -836,6 +836,8 @@ USECODE_INTRINSIC(click_on_item) {
 				t = obj->get_tile();
 		}
 	}
+	cout << "TBC: if (tbc.playerUsingItem) tbc.turnEnd() {Player used an item}" << endl;
+	
 	Usecode_value oval(obj);    // Ret. array with obj as 1st elem.
 	Usecode_value ret(4, &oval);
 	Usecode_value xval(t.tx), yval(t.ty), zval(t.tz);

@@ -331,7 +331,7 @@ void ActionInventory(int const *params) {
 	Game_window *gwin = Game_window::get_instance();
 	static int inventory_page = -1;
 	Actor *actor;
-
+	std::cout << "TBC: if (tbc.blocked) return {Showing inventory}" << std::endl;
 	if (params[0] == -1) {
 		Gump_manager *gump_man = gwin->get_gump_man();
 		int party_count = gwin->get_party_man()->get_count();

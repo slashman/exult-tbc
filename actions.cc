@@ -295,6 +295,7 @@ int Path_walking_actor_action::handle_event(
 		if (deleted) return 0;
 		if (get_party) {    // MUST be the Avatar.
 			Game_window *gwin = Game_window::get_instance();
+			cout << "TBC: if (tbc.inBattle) tbc.increaseStepCount {Walking}" << endl;
 			gwin->get_party_man()->get_followers(newdir);
 			if (done)
 				gwin->get_main_actor()->get_followers();

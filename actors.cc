@@ -1232,7 +1232,6 @@ void Actor::walk_to_tile(
     //   if not already moving).
     int maxblk          // Max. # retries if blocked.
 ) {
-	cout << "TBC: Walk to tile" << endl;
 	if (!action)
 		action = new Path_walking_actor_action(new Zombie(), maxblk);
 	set_action(action->walk_to_tile(this, get_tile(), dest));
@@ -2317,7 +2316,6 @@ void Actor::update_from_studio(
 
 void Actor::show_inventory() {
 	Gump_manager *gump_man = gumpman;
-	cout << "TBC: if (tbc.blocked) return {Showing inventory}" << endl;
 	int shapenum = inventory_shapenum();
 	if (shapenum >= 0)
 		gump_man->add_gump(this, shapenum, true);

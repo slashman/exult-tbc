@@ -1030,6 +1030,8 @@ void Game_object::activate(
 		gumpman->add_gump(this, gump);
 		return;
 	}
+	cout << "TBC: tbc.playerUsingAnItem = true {Player used an item}" << endl;
+
 	ucmachine->call_usecode(get_usecode(), this,
 	                        static_cast<Usecode_machine::Usecode_events>(event));
 }
