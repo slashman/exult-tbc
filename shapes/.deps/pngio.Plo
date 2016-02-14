@@ -1,3 +1,0 @@
-pngio.lo: pngio.cc ../config.h
-
-../config.h:

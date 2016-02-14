@@ -1,3 +1,0 @@
-debugserver.lo: debugserver.cc ../config.h
-
-../config.h:

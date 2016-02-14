@@ -171,7 +171,7 @@ CXXCPP = /usr/bin/clang++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -I/opt/local/include  -w -isysroot /Users/slash/oldhd/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/ -mmacosx-version-min=10.7 
 CYGPATH_W = echo
-DEBUG_FLAGS = -g -Wno-long-long
+DEBUG_FLAGS = -O2 -Wno-long-long
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DESKTOPDIR = ${datarootdir}/applications

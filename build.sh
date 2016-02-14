@@ -12,6 +12,6 @@ export PKG_CONFIG_PATH="/opt/local/lib/pkgconfig"
 export PKG_CONFIG=/opt/local/bin/pkg-config
 export LIBTOOLFLAGS="--silent"
 ./autogen.sh
-./configure --with-sdl=sdl2 --enable-debug
+./configure --with-sdl=sdl2 --enable-all-hq-scalers=no
 make clean > /dev/null
 make -j9 -s
