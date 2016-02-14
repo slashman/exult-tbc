@@ -16,16 +16,18 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
 #include <iostream>
+#include "SDL.h"
+#include "tqueue.h"
+#include "gamewin.h"
 #include "turn_based_combat.h"
-
-TurnBasedCombat::TurnBasedCombat(){
-
-}
 
 void TurnBasedCombat::pause_game(){
 	std::cout << "TurnBasedCombat:pause_game()" << std::endl;
-	// std::cout << "TBC: PAUSING GAME" << std::endl;
+	gwin->get_tqueue()->pause(SDL_GetTicks());
 }
 
 void TurnBasedCombat::resume_game(){
@@ -47,8 +49,9 @@ void TurnBasedCombat::on_combat_ended(){
 void TurnBasedCombat::on_player_walked(){
 	std::cout << "TurnBasedCombat:on_player_walked()" << std::endl;
 	this->playerWalkCounter++;
+	std::cout << "TurnBasedCombat:playerWalkCounter: " << this->playerWalkCounter << std::endl;
 	if (this->playerWalkCounter > 8){
-		this->run_turn();
+		// this->run_turn();
 	}
 }
 

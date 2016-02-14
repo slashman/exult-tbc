@@ -16,12 +16,15 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+class Game_window;
+
 class TurnBasedCombat {
+	Game_window *gwin;
 	int playerWalkCounter;
 	bool playerActionsBlocked;
 	bool playerTargetting;
 public:
-	TurnBasedCombat();
+	TurnBasedCombat(Game_window *g) : gwin(g), playerWalkCounter(0), playerActionsBlocked(false),  playerTargetting(false) {};
 	void pause_game();
 	void resume_game();
 	void on_combat_started();

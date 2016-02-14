@@ -403,7 +403,7 @@ Game_window::Game_window(
 	lerping_enabled(0) {
 	memset(save_names, 0, sizeof(save_names));
 	game_window = this;     // Set static ->.
-	tbc = new TurnBasedCombat();
+	tbc = new TurnBasedCombat(this);
 	clock = new Game_clock(tqueue);
 	shape_man = new Shape_manager();// Create the single instance.
 	maps.push_back(map);        // Map #0.
