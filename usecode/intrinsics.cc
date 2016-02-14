@@ -63,6 +63,7 @@
 #include "animate.h"
 #include "combat.h"
 #include "ready.h"
+#include "turn_based_combat.h"
 
 #ifndef UNDER_EMBEDDED_CE
 using std::cerr;
@@ -836,7 +837,7 @@ USECODE_INTRINSIC(click_on_item) {
 				t = obj->get_tile();
 		}
 	}
-	cout << "TBC: if (tbc.playerUsingItem) tbc.turnEnd() {Player used an item}" << endl;
+	gwin->tbc->check_player_used_item();
 	
 	Usecode_value oval(obj);    // Ret. array with obj as 1st elem.
 	Usecode_value ret(4, &oval);

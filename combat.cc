@@ -49,6 +49,7 @@
 #include "weaponinf.h"
 #include "ready.h"
 #include "usefuns.h"
+#include "turn_based_combat.h"
 
 #ifndef UNDER_EMBEDDED_CE
 using std::cout;
@@ -861,7 +862,7 @@ bool Combat_schedule::attack_target(
 	if (att && att->is_dead())
 		return false;
 	if (attacker == gwin->get_main_actor()){
-		cout << "TBC: tbc.turnEnd() {Player attacking an enemy}" << endl;
+		gwin->tbc->end_turn();
 	}
 	bool flash_mouse = !combat && att && gwin->get_main_actor() == att
 	                   && att->get_attack_mode() != Actor::manual;

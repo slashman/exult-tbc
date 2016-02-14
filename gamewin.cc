@@ -88,6 +88,7 @@
 #include "monstinf.h"
 #include "usefuns.h"
 #include "audio/midi_drivers/XMidiFile.h"
+#include "turn_based_combat.h"
 
 #ifdef USE_EXULTSTUDIO
 #include "server.h"
@@ -402,6 +403,7 @@ Game_window::Game_window(
 	lerping_enabled(0) {
 	memset(save_names, 0, sizeof(save_names));
 	game_window = this;     // Set static ->.
+	tbc = new TurnBasedCombat();
 	clock = new Game_clock(tqueue);
 	shape_man = new Shape_manager();// Create the single instance.
 	maps.push_back(map);        // Map #0.
@@ -766,9 +768,9 @@ void Game_window::toggle_combat(
 ) {
 	combat = !combat;
 	if (combat){
-		cout << "TBC: tbc.checkCombatStarted()" << endl;
+		tbc->on_combat_started();
 	} else {
-		cout << "TBC: tbc.onCombatEnds()" << endl;
+		tbc->on_combat_ended();
 	}
 	// Change party member's schedules.
 	int newsched = combat ? Schedule::combat : Schedule::follow_avatar;
@@ -2371,7 +2373,8 @@ void Game_window::double_clicked(
 	// Animation in progress?
 	if (main_actor_dont_move())
 		return;
-	cout << "TBC: if (tbc.blocked) return {Double Click}" << endl;
+	if (tbc->check_turn_in_progress())
+		return;
 	// Nothing going on?
 	if (!Usecode_script::get_count())
 		removed->flush();   // Flush removed objects.
@@ -2411,7 +2414,6 @@ void Game_window::double_clicked(
 			// Want everyone to be in combat.
 			combat = 0;
 			main_actor->set_target(obj);
-			cout << "TBC: Attacking a monster" << endl;	
 			toggle_combat();
 			return;
 		}

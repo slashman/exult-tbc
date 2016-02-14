@@ -76,6 +76,7 @@ class ShapeID;
 class Shape_info;
 class Game_render;
 class Effects_manager;
+class TurnBasedCombat;
 
 using std::vector;
 
@@ -161,6 +162,7 @@ public:
 	bool paint_eggs;
 	bool armageddon;        // Spell was cast.
 	bool walk_in_formation;     // Use Party_manager for walking.
+	TurnBasedCombat *tbc;   // Manages turn based combat.
 	int debug;
 	uint32 blits;           // For frame-counting.
 	/*
