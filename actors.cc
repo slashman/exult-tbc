@@ -73,6 +73,7 @@
 #include "npcdollinf.h"
 #include "spellbook.h"
 #include "usefuns.h"
+#include "turn_based_combat.h"
 
 #ifdef USE_EXULTSTUDIO
 #include "server.h"
@@ -4992,6 +4993,10 @@ void Npc_actor::handle_event(
 	} else {
 		// Do what we should.
 		int delay = party_id < 0 ? gwin->is_time_stopped() : 0;
+		if (gwin->tbc->in_player_turn()){
+			// Only the avatar can move
+			delay = gwin->is_time_stopped();
+		}
 		if (delay <= 0) {   // Time not stopped?
 			int speed = action->get_speed();
 			delay = action->handle_event(this);

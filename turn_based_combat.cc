@@ -27,21 +27,25 @@
 
 void TurnBasedCombat::pause_game(){
 	std::cout << "TurnBasedCombat:pause_game()" << std::endl;
-	gwin->get_tqueue()->pause(SDL_GetTicks());
+	//gwin->get_tqueue()->pause(SDL_GetTicks());
+	gwin->set_time_stopped(-1);
 }
 
 void TurnBasedCombat::resume_game(){
 	std::cout << "TurnBasedCombat:resume_game()" << std::endl;
 	// std::cout << "TBC: RESUMING GAME" << std::endl;
+	gwin->set_time_stopped(0);
 }
 
 void TurnBasedCombat::on_combat_started(){
 	std::cout << "TurnBasedCombat:on_combat_started()" << std::endl;
+	this->onCombat = true;
 	this->freeze_turn();
 }
 
 void TurnBasedCombat::on_combat_ended(){
 	std::cout << "TurnBasedCombat:on_combat_ended()" << std::endl;
+	this->onCombat = false;
 	// std::cout << "TBC: HIDING PASS TURN BUTTON " << std::endl;	
 	this->resume_game();
 }
@@ -51,7 +55,11 @@ void TurnBasedCombat::on_player_walked(){
 	this->playerWalkCounter++;
 	std::cout << "TurnBasedCombat:playerWalkCounter: " << this->playerWalkCounter << std::endl;
 	if (this->playerWalkCounter > 8){
-		// this->run_turn();
+		if (this->onCombat){
+			this->resume_game();
+			// this->run_turn();
+		}
+		this->playerWalkCounter = 0;
 	}
 }
 
@@ -73,7 +81,11 @@ void TurnBasedCombat::freeze_turn(){
 
 bool TurnBasedCombat::check_turn_in_progress(){
 	std::cout << "TurnBasedCombat:check_turn_in_progress()" << std::endl;
-	return false;
+	return this->onCombat && this->playerActionsBlocked;
+}
+
+bool TurnBasedCombat::in_player_turn(){
+	return this->onCombat && !this->playerActionsBlocked;
 }
 
 void TurnBasedCombat::end_turn(){
