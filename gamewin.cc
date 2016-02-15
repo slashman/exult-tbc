@@ -88,6 +88,7 @@
 #include "monstinf.h"
 #include "usefuns.h"
 #include "audio/midi_drivers/XMidiFile.h"
+#include "turn_based_combat.h"
 
 #ifdef USE_EXULTSTUDIO
 #include "server.h"
@@ -402,6 +403,7 @@ Game_window::Game_window(
 	lerping_enabled(0) {
 	memset(save_names, 0, sizeof(save_names));
 	game_window = this;     // Set static ->.
+	tbc = new TurnBasedCombat(this);
 	clock = new Game_clock(tqueue);
 	shape_man = new Shape_manager();// Create the single instance.
 	maps.push_back(map);        // Map #0.
@@ -765,6 +767,11 @@ long Game_window::check_time_stopped(
 void Game_window::toggle_combat(
 ) {
 	combat = !combat;
+	if (combat){
+		tbc->on_combat_started();
+	} else {
+		tbc->on_combat_ended();
+	}
 	// Change party member's schedules.
 	int newsched = combat ? Schedule::combat : Schedule::follow_avatar;
 	int cnt = party_man->get_count();
@@ -2365,6 +2372,8 @@ void Game_window::double_clicked(
 #endif
 	// Animation in progress?
 	if (main_actor_dont_move())
+		return;
+	if (tbc->check_turn_in_progress())
 		return;
 	// Nothing going on?
 	if (!Usecode_script::get_count())

@@ -96,6 +96,8 @@ exult_SOURCES =	\
 	shapeid.h	\
 	singles.h	\
 	tiles.h		\
+	turn_based_combat.cc \
+	turn_based_combat.h \
 	tqueue.cc	\
 	tqueue.h	\
 	txtscroll.cc	\

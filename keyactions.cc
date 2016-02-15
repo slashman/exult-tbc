@@ -46,7 +46,8 @@
 #include "effects.h"
 #include "palette.h"
 #include "Yesno_gump.h"
-
+#include "turn_based_combat.h"
+ 
 #ifdef UNDER_CE
 #  include "Keyboard_gump.h"
 #  include "Touchscreen.h"
@@ -331,7 +332,9 @@ void ActionInventory(int const *params) {
 	Game_window *gwin = Game_window::get_instance();
 	static int inventory_page = -1;
 	Actor *actor;
-
+	if (gwin->tbc->check_turn_in_progress()){
+		return;
+	}
 	if (params[0] == -1) {
 		Gump_manager *gump_man = gwin->get_gump_man();
 		int party_count = gwin->get_party_man()->get_count();

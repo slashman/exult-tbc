@@ -48,6 +48,7 @@
 #include "frflags.h"
 #include "find_nearby.h"
 #include "usefuns.h"
+#include "turn_based_combat.h"
 
 #ifndef ALPHA_LINUX_CXX
 #  include <cstring>
@@ -1030,6 +1031,8 @@ void Game_object::activate(
 		gumpman->add_gump(this, gump);
 		return;
 	}
+	gwin->tbc->set_player_targetting();
+
 	ucmachine->call_usecode(get_usecode(), this,
 	                        static_cast<Usecode_machine::Usecode_events>(event));
 }
