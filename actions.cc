@@ -288,14 +288,17 @@ int Path_walking_actor_action::handle_event(
 	// Get next (updates step_index).
 	int frame = frames->get_next(step_index);
 	int cur_speed = speed;      // Step() might delete us!
+	Game_window *gwin = Game_window::get_instance();
 	if (from_offscreen) {   // Teleport to 1st spot.
 		from_offscreen = false;
 		actor->move(tile.tx, tile.ty, tile.tz);
 		return cur_speed;
+	} else if (get_party && gwin->tbc->check_turn_in_progress()){
+		// Don't step
+		return 0;
 	} else if (actor->step(tile, frame)) { // Successful.
 		if (deleted) return 0;
 		if (get_party) {    // MUST be the Avatar.
-			Game_window *gwin = Game_window::get_instance();
 			gwin->tbc->on_player_walked();
 			gwin->get_party_man()->get_followers(newdir);
 			if (done)
