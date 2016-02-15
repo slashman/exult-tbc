@@ -21,6 +21,7 @@
 #endif
 #include <iostream>
 #include "SDL.h"
+#include <SDL_timer.h>
 #include "tqueue.h"
 #include "gamewin.h"
 #include "turn_based_combat.h"
@@ -56,11 +57,16 @@ void TurnBasedCombat::on_player_walked(){
 	std::cout << "TurnBasedCombat:playerWalkCounter: " << this->playerWalkCounter << std::endl;
 	if (this->playerWalkCounter > 8){
 		if (this->onCombat){
-			this->resume_game();
-			// this->run_turn();
+			//this->resume_game();
+			this->run_turn();
 		}
 		this->playerWalkCounter = 0;
 	}
+}
+
+Uint32 freeze_turn_callback(Uint32 interval, void *param){
+	((class TurnBasedCombat *)param)->freeze_turn();
+	return 0;
 }
 
 void TurnBasedCombat::run_turn(){
@@ -68,7 +74,8 @@ void TurnBasedCombat::run_turn(){
 	// std::cout << "TBC: HIDING PASS TURN BUTTON " << std::endl;	
 	this->playerActionsBlocked = true;
 	this->resume_game();
-	this->freeze_turn(); // in TURN_TIME_MS (about 500ms)
+	// This must probably be changed to something used the tqueue
+	SDL_TimerID my_timer_id = SDL_AddTimer(2000, freeze_turn_callback, this);
 }
 
 void TurnBasedCombat::freeze_turn(){

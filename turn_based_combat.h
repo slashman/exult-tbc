@@ -42,7 +42,7 @@ public:
 	void set_player_targetting();
 	void check_player_used_item();
 	void end_turn();
+	void freeze_turn();
 private:
 	void run_turn();
-	void freeze_turn();
 };
